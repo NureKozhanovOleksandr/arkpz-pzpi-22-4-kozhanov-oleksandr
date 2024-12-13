@@ -1,2 +1,6 @@
 # arkpz-pzpi-22-4-kozhanov-oleksandr
-Software system for monitoring the condition of animals in clinics
+ПЗПІ-22-4
+
+Кожанов Олександр
+
+Програмна система для контролю стану тварин в клініках
