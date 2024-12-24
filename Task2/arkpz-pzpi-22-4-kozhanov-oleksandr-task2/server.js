@@ -1,9 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const db = require('./config/db');
+const connectDB = require('./config/db');
+const morgan = require('morgan');
 
 const app = express();
 app.use(express.json());
+
+// Use morgan to log requests to the console
+app.use(morgan('dev'));
+
+connectDB();
 
 const Animal = require('./Models/Animal');
 const Owner = require('./Models/Owner');

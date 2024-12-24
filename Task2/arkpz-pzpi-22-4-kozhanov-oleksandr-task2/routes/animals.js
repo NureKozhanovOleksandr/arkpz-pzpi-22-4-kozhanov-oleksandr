@@ -24,8 +24,8 @@ router.post('/add', async (req, res) => {
   });
 
   try {
-    const newAnimal = await animal.save();
-    res.status(201).json(newAnimal);
+    await animal.save();
+    res.status(201).json({message: "Animal added successfully"});
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
