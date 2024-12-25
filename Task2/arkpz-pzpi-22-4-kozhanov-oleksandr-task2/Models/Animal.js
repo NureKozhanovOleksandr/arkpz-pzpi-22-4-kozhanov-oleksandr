@@ -8,7 +8,6 @@ const animalSchema = new mongoose.Schema({
   age: { type: Number },
   weight: { type: Number },
   ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' },
-  healthRecordsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'HealthRecord' }],
   lastVisit: { type: Date }
 });
 
