@@ -1,0 +1,885 @@
+Харківський університет радіоелектроніки
+Факультет комп'ютерних наук
+
+
+
+Кафедра програмної інженерії
+
+
+
+ЗВІТ
+до лабораторної роботи номер 2 з дисципліни
+"Аналіз та рефакторинг коду"
+на тему: " РОЗРОБКА БАЗИ ДАНИХ ДЛЯ СЕРВЕРНОЇ ЧАСТИНИ ПРОГРАМНОЇ СИСТЕМИ ТА ПРИКЛАДНОГО ПРОГРАМНОГО ІНТЕРФЕЙСУ (API)"
+
+
+
+
+Виконав ст. гр. ПЗПІ-22-4
+Кожанов Олександр Юрійович
+
+Перевірив
+ст. викладач кафедри ПІ
+Сокорчук Ігор Петрович
+ 
+
+
+
+
+Харків 2024
+1 МЕТА
+
+Метою роботи є розробка бази даних для серверної частини та прикладного програмного інтерфейсу для програмної системи контролю стану тварин в клініках.
+
+2 ХІД РОБОТИ
+
+Першим етапом виконання лабораторної роботи стало розроблення UML-діаграми прецедентів для програмної системи контролю стану тварин у клініках. Цю діаграму наведено в Додатку А.
+Далі було побудовано ER-діаграму, яку наведено в Додатку Б.
+На основі створеної ER-діаграми було спроєктовано та реалізовано базу даних у MongoDB. Діаграма структури бази даних наведена в Додатку В.
+Наступним кроком було розроблено REST API з використанням фреймворку Express.
+Щоб спростити розробку та тестування, було створено документацію API з використанням Postman. Цю специфікацію наведено в Додатку Г.
+Кожен маршрут був протестований у Postman, а тестова колекція збережена для подальшої роботи. Відеозапис захисту наведено в Додатку Е.
+У процесі розробки API були прийняті такі технічні рішення:
+Система організована за багатошаровою архітектурою:
+На клієнтському рівні здійснюється формування та надсилання HTTP-запитів до API.
+Серверний рівень реалізований за допомогою Express для обробки цих запитів.
+Збереження даних виконується на рівні бази, де використовується MongoDB.
+Express був обраний як основний фреймворк завдяки:
+Легкості у використанні та швидкому налаштуванню.
+Гнучкій архітектурі, яка дозволяє створювати модульні додатки.
+Можливості інтеграції різноманітних middleware для обробки запитів.
+Підтримці сучасних стандартів JavaScript.
+Широкій екосистемі, яка надає безліч готових бібліотек і рішень.
+Для роботи з базою даних використовується Mongoose ODM, яка забезпечує:
+Інтуїтивні інструменти для створення та налаштування схем.
+Вбудовану систему перевірки даних.
+Зручність у визначенні та управлінні зв’язками між даними.
+Повну підтримку сучасних можливостей JavaScript.
+Валідація даних здійснюється на рівні бази даних за допомогою схем Mongoose, що дозволяє перевіряти дані перед збереженням.
+MongoDB було обрано для зберігання даних завдяки її:
+Можливості працювати зі структурами, які легко адаптуються під зміни.
+Швидкому доступу до даних навіть при великому обсязі інформації.
+Здатності масштабуватись для підтримки зростаючих навантажень.
+Простому використанню документів, що нагадують формат JSON, для зручності розробки.
+Увесь вихідний код проєкту розміщений у репозиторії GitHub, а основні частини коду наведені в Додатку Д.
+
+
+ 
+3 ВИСНОВКИ
+
+Під час виконання лабораторної роботи були розроблені UML-діаграма прецедентів та ER-діаграма для програмної системи контролю стану тварин у клініках. Це дозволило сформулювати основні вимоги до функціональності та структури даних. На основі цих діаграм була побудована база даних і створена документація API для опису взаємодії між компонентами системи за допомогою Postman.
+Серверну частину системи було розроблено за допомогою фреймворку Express, який забезпечує гнучкість і простоту налаштування завдяки своїй легкій структурі та широким можливостям для розширення. Усі розробки виконувались на JavaScript, що дозволяє використовувати сучасні функції мови та знижує складність підтримки коду. Для роботи з базою даних застосовано Mongoose ODM, що пропонує зручні інструменти для управління схемами та валідації даних. Тестування API здійснювалося через Postman. 
+ДОДАТОК А
+UML ДІАГРАМА ПРЕЦЕДЕНТІВ
+
+ 
+Рисунок А – UML діаграма прецедентів
+ 
+ДОДАТОК Б
+ER ДІАГРАМА БАЗИ ДАНИХ
+
+ 
+Рисунок Б – ER діаграма бази даних
+ 
+ДОДАТОК В
+ДІАГРАМА СТРУКТУРИ БАЗИ ДАНИХ
+
+ 
+Рисунок В – Діаграма структури бази даних
+ 
+ДОДАТОК Г
+СПЕЦИФІКАЦІЯ API
+1	{
+2		"info": {
+3			"_postman_id": "c73bcd2a-b2d4-4c0c-a3a5-404176c82ae7",
+4			"name": "AnimalsCareSystem",
+5			"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+6			"_exporter_id": "39619126"
+7		},
+8		"item": [
+9			{
+10				"name": "animals",
+11				"item": [
+12					{
+13						"name": "get animals",
+14						"protocolProfileBehavior": {
+15							"disableBodyPruning": true
+16						},
+17						"request": {
+18							"method": "GET",
+19							"header": [],
+20							"body": {
+21								"mode": "raw",
+22								"raw": "{\r\n  \"name\": \"Buddy\",\r\n  \"species\": \"Dog\",\r\n  \"breed\": \"Golden Retriever\",\r\n  \"age\": 3,\r\n  \"weight\": 30,\r\n  \"ownerId\": \"60d5f9b5f1d2c72b8c8b4567\",\r\n  \"healthRecordsIds\": [],\r\n  \"lastVisit\": \"2023-10-01T00:00:00.000Z\"\r\n}",
+23								"options": {
+24									"raw": {
+25										"language": "json"
+26									}
+27								}
+28							},
+29							"url": {
+30								"raw": "http://localhost:5000/api/animals/all",
+31								"protocol": "http",
+32								"host": [
+33									"localhost"
+34								],
+35								"port": "5000",
+36								"path": [
+37									"api",
+38									"animals",
+39									"all"
+40								]
+41							}
+42						},
+43						"response": []
+44					},
+45					{
+46						"name": "get animal by id",
+47						"request": {
+48							"method": "GET",
+49							"header": []
+50						},
+51						"response": []
+52					},
+53					{
+54						"name": "add animal",
+55						"request": {
+56							"method": "POST",
+57							"header": [],
+58							"url": {
+59								"raw": "http/localhost:5000/api/animals/add",
+60								"host": [
+61									"http"
+62								],
+63								"path": [
+64									"localhost:5000",
+65									"api",
+66									"animals",
+67									"add"
+68								]
+69							}
+70						},
+71						"response": []
+72					},
+73					{
+74						"name": "update animal by id",
+75						"request": {
+76							"method": "PUT",
+77							"header": [],
+78							"body": {
+79								"mode": "raw",
+80								"raw": "",
+81								"options": {
+82									"raw": {
+83										"language": "json"
+84									}
+85								}
+86							},
+87							"url": {
+88								"raw": "http://localhost:5000/api/animals/:id",
+89								"protocol": "http",
+90								"host": [
+91									"localhost"
+92								],
+93								"port": "5000",
+94								"path": [
+95									"api",
+96									"animals",
+97									":id"
+98								],
+99								"variable": [
+100									{
+101										"key": "id",
+102										"value": ""
+103									}
+104								]
+105							}
+106						},
+107						"response": []
+108					},
+109					{
+110						"name": "delete animal by id",
+111						"request": {
+112							"method": "DELETE",
+113							"header": [],
+114							"url": {
+115								"raw": "http://localhost:5000/api/animals/:id",
+116								"protocol": "http",
+117								"host": [
+118									"localhost"
+119								],
+120								"port": "5000",
+121								"path": [
+122									"api",
+123									"animals",
+124									":id"
+125								],
+126								"variable": [
+127									{
+128										"key": "id",
+129										"value": ""
+130									}
+131								]
+132							}
+133						},
+134						"response": []
+135					}
+136				]
+137			},
+138			{
+139				"name": "appointments",
+140				"item": [
+141					{
+142						"name": "get all appointments",
+143						"request": {
+144							"method": "GET",
+145							"header": [],
+146							"url": {
+147								"raw": "http://localhost:5000/api/appointments/all",
+148								"protocol": "http",
+149								"host": [
+150									"localhost"
+151								],
+152								"port": "5000",
+153								"path": [
+154									"api",
+155									"appointments",
+156									"all"
+157								]
+158							}
+159						},
+160						"response": []
+161					},
+162					{
+163						"name": "get appointment by id",
+164						"request": {
+165							"method": "GET",
+166							"header": [],
+167							"url": {
+168								"raw": "http://localhost:5000/api/appointments/:id",
+169								"protocol": "http",
+170								"host": [
+171									"localhost"
+172								],
+173								"port": "5000",
+174								"path": [
+175									"api",
+176									"appointments",
+177									":id"
+178								],
+179								"variable": [
+180									{
+181										"key": "id",
+182										"value": ""
+183									}
+184								]
+185							}
+186						},
+187						"response": []
+188					},
+189					{
+190						"name": "add new appointment",
+191						"request": {
+192							"method": "POST",
+193							"header": [],
+194							"body": {
+195								"mode": "raw",
+196								"raw": "{\r\n    \"animalId\": \"676c0d1a50d2baf2a57fa6bc\",\r\n    \"vetId\": \"\",\r\n    \"date\": \"\",\r\n    \"reason\": \"\",\r\n    \"status\": \"\"\r\n}",
+197								"options": {
+198									"raw": {
+199										"language": "json"
+200									}
+201								}
+202							},
+203							"url": {
+204								"raw": "http://localhost:5000/api/appointments/add",
+205								"protocol": "http",
+206								"host": [
+207									"localhost"
+208								],
+209								"port": "5000",
+210								"path": [
+211									"api",
+212									"appointments",
+213									"add"
+214								]
+215							}
+216						},
+217						"response": []
+218					},
+219					{
+220						"name": "delete appointment by id",
+221						"request": {
+222							"method": "DELETE",
+223							"header": [],
+224							"url": {
+225								"raw": "http://localhost:5000/api/appointments/:id",
+226								"protocol": "http",
+227								"host": [
+228									"localhost"
+229								],
+230								"port": "5000",
+231								"path": [
+232									"api",
+233									"appointments",
+234									":id"
+235								],
+236								"variable": [
+237									{
+238										"key": "id",
+239										"value": ""
+240									}
+241								]
+242							}
+243						},
+244						"response": []
+245					}
+246				]
+247			},
+248			{
+249				"name": "health records",
+250				"item": [
+251					{
+252						"name": "get all health records",
+253						"request": {
+254							"method": "GET",
+255							"header": [],
+256							"url": {
+257								"raw": "http://localhost:5000/api/healthrecords/all",
+258								"protocol": "http",
+259								"host": [
+260									"localhost"
+261								],
+262								"port": "5000",
+263								"path": [
+264									"api",
+265									"healthrecords",
+266									"all"
+267								]
+268							}
+269						},
+270						"response": []
+271					},
+272					{
+273						"name": "get health record by id",
+274						"request": {
+275							"method": "GET",
+276							"header": [],
+277							"url": {
+278								"raw": "http://localhost:5000/api/healthrecords/:id",
+279								"protocol": "http",
+280								"host": [
+281									"localhost"
+282								],
+283								"port": "5000",
+284								"path": [
+285									"api",
+286									"healthrecords",
+287									":id"
+288								],
+289								"variable": [
+290									{
+291										"key": "id",
+292										"value": ""
+293									}
+294								]
+295							}
+296						},
+297						"response": []
+298					},
+299					{
+300						"name": "get notifications by animal id",
+301						"request": {
+302							"method": "GET",
+303							"header": [],
+304							"url": {
+305								"raw": "http://localhost:5000/api/healthrecords/check-critical/:animalId",
+306								"protocol": "http",
+307								"host": [
+308									"localhost"
+309								],
+310								"port": "5000",
+311								"path": [
+312									"api",
+313									"healthrecords",
+314									"check-critical",
+315									":animalId"
+316								],
+317								"variable": [
+318									{
+319										"key": "animalId",
+320										"value": ""
+321									}
+322								]
+323							}
+324						},
+325						"response": []
+326					},
+327					{
+328						"name": "add new health record",
+329						"request": {
+330							"method": "POST",
+331							"header": [],
+332							"body": {
+333								"mode": "raw",
+334								"raw": "{\r\n    \"animalId\": \"\",\r\n    \"date\": \"\",\r\n    \"diagnosis\": \"\",\r\n    \"treatment\": \"\",\r\n    \"notes\": \"\",\r\n    \"vetId\": \"\",\r\n    \"temperature\": \"\",\r\n    \"pulse\": \"\",\r\n    \"bloodSugar\": \"\"\r\n}",
+335								"options": {
+336									"raw": {
+337										"language": "json"
+338									}
+339								}
+340							},
+341							"url": {
+342								"raw": "http://localhost:5000/api/healthrecords/add",
+343								"protocol": "http",
+344								"host": [
+345									"localhost"
+346								],
+347								"port": "5000",
+348								"path": [
+349									"api",
+350									"healthrecords",
+351									"add"
+352								]
+353							}
+354						},
+355						"response": []
+356					},
+357					{
+358						"name": "update health record by id",
+359						"request": {
+360							"method": "PUT",
+361							"header": [],
+362							"url": {
+363								"raw": "http://localhost:5000/api/healthrecords/:id",
+364								"protocol": "http",
+365								"host": [
+366									"localhost"
+367								],
+368								"port": "5000",
+369								"path": [
+370									"api",
+371									"healthrecords",
+372									":id"
+373								],
+374								"variable": [
+375									{
+376										"key": "id",
+377										"value": ""
+378									}
+379								]
+380							}
+381						},
+382						"response": []
+383					},
+384					{
+385						"name": "delete health record by id",
+386						"request": {
+387							"method": "DELETE",
+388							"header": [],
+389							"url": {
+390								"raw": "http://localhost:5000/api/healthrecords/:id",
+391								"protocol": "http",
+392								"host": [
+393									"localhost"
+394								],
+395								"port": "5000",
+396								"path": [
+397									"api",
+398									"healthrecords",
+399									":id"
+400								],
+401								"variable": [
+402									{
+403										"key": "id",
+404										"value": ""
+405									}
+406								]
+407							}
+408						},
+409						"response": []
+410					}
+411				]
+412			},
+413			{
+414				"name": "owners",
+415				"item": [
+416					{
+417						"name": "get all owners",
+418						"request": {
+419							"method": "GET",
+420							"header": [],
+421							"url": {
+422								"raw": "http://localhost:5000/api/owners/all",
+423								"protocol": "http",
+424								"host": [
+425									"localhost"
+426								],
+427								"port": "5000",
+428								"path": [
+429									"api",
+430									"owners",
+431									"all"
+432								]
+433							}
+434						},
+435						"response": []
+436					},
+437					{
+438						"name": "get owner by id",
+439						"request": {
+440							"method": "GET",
+441							"header": [],
+442							"url": {
+443								"raw": "http://localhost:5000/api/owners/:id",
+444								"protocol": "http",
+445								"host": [
+446									"localhost"
+447								],
+448								"port": "5000",
+449								"path": [
+450									"api",
+451									"owners",
+452									":id"
+453								],
+454								"variable": [
+455									{
+456										"key": "id",
+457										"value": ""
+458									}
+459								]
+460							}
+461						},
+462						"response": []
+463					},
+464					{
+465						"name": "add new owner",
+466						"request": {
+467							"method": "POST",
+468							"header": [],
+469							"body": {
+470								"mode": "raw",
+471								"raw": "{\r\n    \"name\": \"Oleg\",\r\n    \"email\": \"example@gmail.com\",\r\n    \"address\": \"Kyiv, Nauku, 5\"\r\n}",
+472								"options": {
+473									"raw": {
+474										"language": "json"
+475									}
+476								}
+477							},
+478							"url": {
+479								"raw": "http://localhost:5000/api/owners/add",
+480								"protocol": "http",
+481								"host": [
+482									"localhost"
+483								],
+484								"port": "5000",
+485								"path": [
+486									"api",
+487									"owners",
+488									"add"
+489								]
+490							}
+491						},
+492						"response": []
+493					},
+494					{
+495						"name": "update owner by id",
+496						"request": {
+497							"method": "PUT",
+498							"header": [],
+499							"body": {
+500								"mode": "raw",
+501								"raw": "",
+502								"options": {
+503									"raw": {
+504										"language": "json"
+505									}
+506								}
+507							},
+508							"url": {
+509								"raw": "http://localhost:5000/api/owners/:id",
+510								"protocol": "http",
+511								"host": [
+512									"localhost"
+513								],
+514								"port": "5000",
+515								"path": [
+516									"api",
+517									"owners",
+518									":id"
+519								],
+520								"variable": [
+521									{
+522										"key": "id",
+523										"value": ""
+524									}
+525								]
+526							}
+527						},
+528						"response": []
+529					},
+530					{
+531						"name": "delete owner by id",
+532						"request": {
+533							"method": "DELETE",
+534							"header": [],
+535							"url": {
+536								"raw": "http://localhost:5000/api/owners/:id",
+537								"protocol": "http",
+538								"host": [
+539									"localhost"
+540								],
+541								"port": "5000",
+542								"path": [
+543									"api",
+544									"owners",
+545									":id"
+546								],
+547								"variable": [
+548									{
+549										"key": "id",
+550										"value": ""
+551									}
+552								]
+553							}
+554						},
+555						"response": []
+556					}
+557				]
+558			},
+559			{
+560				"name": "vets",
+561				"item": [
+562					{
+563						"name": "get vets",
+564						"request": {
+565							"method": "GET",
+566							"header": [],
+567							"url": {
+568								"raw": "http://localhost:5000/api/vets/all",
+569								"protocol": "http",
+570								"host": [
+571									"localhost"
+572								],
+573								"port": "5000",
+574								"path": [
+575									"api",
+576									"vets",
+577									"all"
+578								]
+579							}
+580						},
+581						"response": []
+582					},
+583					{
+584						"name": "get vet by id",
+585						"request": {
+586							"method": "GET",
+587							"header": [],
+588							"url": {
+589								"raw": "http://localhost:5000/api/vets/:id",
+590								"protocol": "http",
+591								"host": [
+592									"localhost"
+593								],
+594								"port": "5000",
+595								"path": [
+596									"api",
+597									"vets",
+598									":id"
+599								],
+600								"variable": [
+601									{
+602										"key": "id",
+603										"value": ""
+604									}
+605								]
+606							}
+607						},
+608						"response": []
+609					},
+610					{
+611						"name": "add new vet",
+612						"request": {
+613							"method": "POST",
+614							"header": [],
+615							"body": {
+616								"mode": "raw",
+617								"raw": "{\r\n    \"name\": \"Alex\",\r\n    \"specialization\": \"cats\",\r\n    \"contactInfo\": \"+380500306237\"\r\n}",
+618								"options": {
+619									"raw": {
+620										"language": "json"
+621									}
+622								}
+623							},
+624							"url": {
+625								"raw": "http://localhost:5000/api/vets/add",
+626								"protocol": "http",
+627								"host": [
+628									"localhost"
+629								],
+630								"port": "5000",
+631								"path": [
+632									"api",
+633									"vets",
+634									"add"
+635								]
+636							}
+637						},
+638						"response": []
+639					},
+640					{
+641						"name": "update vet by id",
+642						"request": {
+643							"method": "PUT",
+644							"header": [],
+645							"body": {
+646								"mode": "raw",
+647								"raw": "",
+648								"options": {
+649									"raw": {
+650										"language": "json"
+651									}
+652								}
+653							},
+654							"url": {
+655								"raw": "http://localhost:5000/api/vets/:id",
+656								"protocol": "http",
+657								"host": [
+658									"localhost"
+659								],
+660								"port": "5000",
+661								"path": [
+662									"api",
+663									"vets",
+664									":id"
+665								],
+666								"variable": [
+667									{
+668										"key": "id",
+669										"value": ""
+670									}
+671								]
+672							}
+673						},
+674						"response": []
+675					},
+676					{
+677						"name": "delete vet by id",
+678						"request": {
+679							"method": "DELETE",
+680							"header": [],
+681							"url": {
+682								"raw": "http://localhost:5000/api/vets/:id",
+683								"protocol": "http",
+684								"host": [
+685									"localhost"
+686								],
+687								"port": "5000",
+688								"path": [
+689									"api",
+690									"vets",
+691									":id"
+692								],
+693								"variable": [
+694									{
+695										"key": "id",
+696										"value": ""
+697									}
+698								]
+699							}
+700						},
+701						"response": []
+702					}
+703				]
+704			}
+705		]
+706	}
+ 
+ДОДАТОК Д
+ПРОГРАМНИЙ КОД
+
+Приклад створення моделі для бази даних
+1	const mongoose = require('mongoose');
+
+2	const healthRecordSchema = new mongoose.Schema({
+3	animalId: { type: mongoose.Schema.Types.ObjectId, ref: 'Animal', required: true },
+4	date: { type: Date, required: true },
+5	diagnosis: { type: String, required: true },
+6	treatment: { type: String },
+7	notes: { type: String },
+8	vetId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vet' },
+9	temperature: { type: Number },
+10	pulse: { type: Number },
+11	bloodSugar: { type: Number }
+12	});
+
+13	const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
+14	module.exports = HealthRecord;
+
+
+Створення зв’язку з базою даних MongoDB
+1	const mongoose = require('mongoose');
+
+2	const connectDB = async () => {
+3	try {
+4	await mongoose.connect('mongodb://localhost:27017/animal_care_system', {
+5	});
+6	console.log('Connected');
+7	} catch (err) {
+8	console.error(err.message);
+9	process.exit(1);
+10	}
+11	};
+
+12	module.exports = connectDB;
+
+
+ 
+Приклад маршрутів
+1	const express = require('express');
+2	const router = express.Router();
+3	const Animal = require('../Models/Animal');
+4	const Owner = require('../Models/Owner');
+
+5	router.get('/all', async (req, res) => {
+6	try {
+7	const animals = await Animal.find();
+8	res.json(animals);
+9	} catch (err) {
+10	res.status(500).json({ message: err.message });
+11	}
+12	});
+
+13	router.post('/add', async (req, res) => {
+14	const animal = new Animal({
+15	name: req.body.name,
+16	species: req.body.species,
+17	breed: req.body.breed,
+18	age: req.body.age,
+19	weight: req.body.weight,
+20	ownerId: req.body.ownerId,
+21	healthRecordsIds: req.body.healthRecordsIds,
+22	lastVisit: req.body.lastVisit
+23	});
+
+24	try {
+25	const newAnimal = await animal.save();
+
+26	const owner = await Owner.findById(req.body.ownerId);
+27	if (owner) {
+a.	owner.animals.push(newAnimal._id);
+b.	await owner.save();
+28	}
+
+29	res.status(201).json({ message: 'Animal added successfully' });
+30	} catch (err) {
+31	res.status(400).json({ message: err.message });
+32	}
+33	});
+
+ 
+ДОДАТОК Е
+ВІДЕО НА ЮТУБ
+
+https://youtu.be/koZHRJVfvzU
