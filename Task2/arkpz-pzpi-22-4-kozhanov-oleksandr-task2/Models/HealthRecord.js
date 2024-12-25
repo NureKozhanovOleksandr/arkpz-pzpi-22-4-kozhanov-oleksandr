@@ -6,7 +6,10 @@ const healthRecordSchema = new mongoose.Schema({
   diagnosis: { type: String, required: true },
   treatment: { type: String },
   notes: { type: String },
-  vetId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vet' }
+  vetId: { type: mongoose.Schema.Types.ObjectId, ref: 'Vet' },
+  temperature: { type: Number },
+  pulse: { type: Number },
+  bloodSugar: { type: Number }
 });
 
 const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
