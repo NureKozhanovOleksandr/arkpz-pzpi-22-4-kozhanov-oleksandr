@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Owner = require('../Models/Owner');
+const authMiddleware = require('../middleware/authMiddleware');
+const roleMiddleware = require('../middleware/roleMiddleware');
 
 router.get('/all', async (req, res) => {
   try {
@@ -21,7 +23,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   const owner = new Owner({
     name: req.body.name,
     email: req.body.email,
@@ -37,7 +39,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   try {
     const owner = await Owner.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!owner) return res.status(404).json({ message: 'Owner not found' });
@@ -47,7 +49,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);
     if (!owner) return res.status(404).json({ message: 'Owner not found' });

@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Animal = require('../Models/Animal');
 const Owner = require('../Models/Owner');
+const authMiddleware = require('../middleware/authMiddleware');
+const roleMiddleware = require('../middleware/roleMiddleware');
 
-router.get('/all', async (req, res) => {
+router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const animals = await Animal.find();
     res.json(animals);
@@ -12,7 +14,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);
     if (!animal) return res.status(404).json({ message: 'Animal not found' });
@@ -22,7 +24,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   const animal = new Animal({
     name: req.body.name,
     species: req.body.species,
@@ -49,7 +51,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const animal = await Animal.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!animal) return res.status(404).json({ message: 'Animal not found' });
@@ -59,7 +61,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);
     if (!animal) return res.status(404).json({ message: 'Animal not found' });

@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const HealthRecord = require('../Models/HealthRecord');
+const authMiddleware = require('../middleware/authMiddleware');
+const roleMiddleware = require('../middleware/roleMiddleware');
 
-router.get('/all', async (req, res) => {
+router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const healthRecords = await HealthRecord.find();
     res.json(healthRecords);
@@ -11,7 +13,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);
     if (!healthRecord) return res.status(404).json({ message: 'Health record not found' });
@@ -21,7 +23,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   const healthRecord = new HealthRecord({
     animalId: req.body.animalId,
     date: req.body.date,
@@ -42,7 +44,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!healthRecord) return res.status(404).json({ message: 'Health record not found' });
@@ -52,7 +54,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);
     if (!healthRecord) return res.status(404).json({ message: 'Health record not found' });
@@ -65,7 +67,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/check-critical/:animalId', async (req, res) => {
+router.get('/check-critical/:animalId', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecords = await HealthRecord.find({ animalId: req.params.animalId });
     const criticalMessages = [];

@@ -19,11 +19,11 @@ const authRoutes = require('./routes/auth');
 
 app.use('/api/auth', authRoutes);
 
-app.use('/api/animals', authMiddleware, roleMiddleware('vet'), animalRoutes);
-app.use('/api/healthrecords', authMiddleware, roleMiddleware('vet'), healthRecordRoutes);
-app.use('/api/appointments', authMiddleware, roleMiddleware('vet'), appointmentRoutes);
+app.use('/api/animals', authMiddleware, animalRoutes);
+app.use('/api/healthrecords', authMiddleware, healthRecordRoutes);
+app.use('/api/appointments', authMiddleware, appointmentRoutes);
 app.use('/api/vets', authMiddleware, roleMiddleware('admin'), vetRoutes);
-app.use('/api/owners', authMiddleware, roleMiddleware('admin'), ownerRoutes);
+app.use('/api/owners', authMiddleware, roleMiddleware(['admin', 'vet']), ownerRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
