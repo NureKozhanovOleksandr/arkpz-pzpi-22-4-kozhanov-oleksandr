@@ -19,6 +19,7 @@ const authRoutes = require('./routes/auth');
 
 app.use('/api/auth', authRoutes);
 
+// Protected routes
 app.use('/api/animals', authMiddleware, animalRoutes);
 app.use('/api/healthrecords', authMiddleware, healthRecordRoutes);
 app.use('/api/appointments', authMiddleware, appointmentRoutes);

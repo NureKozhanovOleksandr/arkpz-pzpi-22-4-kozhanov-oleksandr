@@ -4,6 +4,11 @@ const Owner = require('../Models/Owner');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
+/**
+ * @route GET /api/owners/all
+ * @desc Get all owners
+ * @access Private (vet)
+ */
 router.get('/all', async (req, res) => {
   try {
     const owners = await Owner.find();
@@ -13,6 +18,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /api/owners/:id
+ * @desc Get owner by ID
+ * @access Private (vet)
+ */
 router.get('/:id', async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);
@@ -23,6 +33,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /api/owners/add
+ * @desc Create a new owner
+ * @access Private (admin)
+ */
 router.post('/add', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   const owner = new Owner({
     name: req.body.name,
@@ -39,6 +54,11 @@ router.post('/add', authMiddleware, roleMiddleware('admin'), async (req, res) =>
   }
 });
 
+/**
+ * @route PUT /api/owners/:id
+ * @desc Update an owner
+ * @access Private (admin)
+ */
 router.put('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   try {
     const owner = await Owner.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -49,6 +69,11 @@ router.put('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => 
   }
 });
 
+/**
+ * @route DELETE /api/owners/:id
+ * @desc Delete an owner
+ * @access Private (admin)
+ */
 router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);

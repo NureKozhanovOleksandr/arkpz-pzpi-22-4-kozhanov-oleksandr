@@ -5,6 +5,11 @@ const Owner = require('../Models/Owner');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
+/**
+ * @route GET /api/animals/all
+ * @desc Get all animals
+ * @access Private (owner, vet)
+ */
 router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const animals = await Animal.find();
@@ -14,6 +19,11 @@ router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route GET /api/animals/:id
+ * @desc Get animal by ID
+ * @access Private (owner, vet)
+ */
 router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);
@@ -24,6 +34,11 @@ router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route POST /api/animals/add
+ * @desc Create a new animal
+ * @access Private (vet)
+ */
 router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   const animal = new Animal({
     name: req.body.name,
@@ -51,6 +66,11 @@ router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /api/animals/:id
+ * @desc Update an animal
+ * @access Private (vet)
+ */
 router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const animal = await Animal.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -61,6 +81,11 @@ router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /api/animals/:id
+ * @desc Delete an animal
+ * @access Private (vet)
+ */
 router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);

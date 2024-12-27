@@ -4,6 +4,11 @@ const HealthRecord = require('../Models/HealthRecord');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
+/**
+ * @route GET /api/healthrecords/all
+ * @desc Get all health records
+ * @access Private (owner, vet)
+ */
 router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const healthRecords = await HealthRecord.find();
@@ -13,6 +18,11 @@ router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route GET /api/healthrecords/:id
+ * @desc Get health record by ID
+ * @access Private (owner, vet)
+ */
 router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);
@@ -23,6 +33,11 @@ router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route POST /api/healthrecords/add
+ * @desc Create a new health record
+ * @access Private (vet)
+ */
 router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   const healthRecord = new HealthRecord({
     animalId: req.body.animalId,
@@ -44,6 +59,11 @@ router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /api/healthrecords/:id
+ * @desc Update a health record
+ * @access Private (vet)
+ */
 router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -54,6 +74,11 @@ router.put('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /api/healthrecords/:id
+ * @desc Delete a health record
+ * @access Private (vet)
+ */
 router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);
@@ -67,6 +92,11 @@ router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) =>
   }
 });
 
+/**
+ * @route GET /api/healthrecords/check-critical/:animalId
+ * @desc Check a critical health messages
+ * @access Private (vet)
+ */
 router.get('/check-critical/:animalId', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const healthRecords = await HealthRecord.find({ animalId: req.params.animalId });

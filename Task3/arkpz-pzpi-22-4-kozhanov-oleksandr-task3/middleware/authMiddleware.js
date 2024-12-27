@@ -1,5 +1,11 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * Middleware to check the authorization token
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
 module.exports = function(req, res, next) {
   const authHeader = req.header('Authorization');
   if (!authHeader) {

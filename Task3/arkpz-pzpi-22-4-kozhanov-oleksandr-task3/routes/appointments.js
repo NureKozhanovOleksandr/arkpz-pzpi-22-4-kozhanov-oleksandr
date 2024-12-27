@@ -4,6 +4,11 @@ const Appointment = require('../Models/Appointment');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
+/**
+ * @route GET /api/appointments/all
+ * @desc Get all appointments
+ * @access Private (owner, vet)
+ */
 router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const appointments = await Appointment.find();
@@ -13,6 +18,11 @@ router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route GET /api/appointments/:id
+ * @desc Get appointment by ID
+ * @access Private (owner, vet)
+ */
 router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
@@ -23,6 +33,11 @@ router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req,
   }
 });
 
+/**
+ * @route POST /api/appointments/add
+ * @desc Create a new appointment
+ * @access Private (vet)
+ */
 router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   const appointment = new Appointment({
     animalId: req.body.animalId,
@@ -40,6 +55,11 @@ router.post('/add', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /api/appointments/:id
+ * @desc Delete an appointment
+ * @access Private (vet)
+ */
 router.delete('/:id', authMiddleware, roleMiddleware('vet'), async (req, res) => {
   try {
     const appointment = await Appointment.findByIdAndDelete(req.params.id);
