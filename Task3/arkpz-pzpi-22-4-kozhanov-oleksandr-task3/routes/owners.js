@@ -7,9 +7,9 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 /**
  * @route GET /api/owners/all
  * @desc Get all owners
- * @access Private (vet)
+ * @access Private (admin, vet)
  */
-router.get('/all', async (req, res) => {
+router.get('/all', authMiddleware, roleMiddleware(['admin', 'vet']), async (req, res) => {
   try {
     const owners = await Owner.find();
     res.json(owners);
@@ -21,9 +21,9 @@ router.get('/all', async (req, res) => {
 /**
  * @route GET /api/owners/:id
  * @desc Get owner by ID
- * @access Private (vet)
+ * @access Private (admin, vet)
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, roleMiddleware(['admin', 'vet']), async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);
     if (!owner) return res.status(404).json({ message: 'Owner not found' });

@@ -1,0 +1,121 @@
+Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+
+
+Кафедра програмної інженерії
+
+
+
+ЗВІТ
+до лабораторної роботи номер 3 з дисципліни
+"Аналіз та рефакторинг коду"
+на тему: "РОЗРОБКА БІЗНЕС-ЛОГІКИ ТА ФУНКЦІЙ АДМІНІСТРУВАННЯ СЕРВЕРНОЇ ЧАСТИНИ ПРОГРАМНОЇ СИСТЕМИ"
+
+
+
+
+
+Виконав ст. гр. ПЗПІ-22-4
+Кожанов Олександр Юрійович
+
+Перевірив
+ст. викладач кафедри ПІ
+Сокорчук Ігор Петрович
+ 
+
+
+
+Харків 2024
+1 МЕТА
+
+Метою роботи є розробити бізнес логіку та функції адміністрування серверної частини програмної системи.
+
+2 ХІД РОБОТИ
+
+Під час виконання лабораторної роботи було розроблено наступну бізнес-логіку (опис інженерних рішень):
+–	застосування хешування паролів для їх безпечного зберігання в базі даних;
+–	реалізація Middleware для управління сесіями, фіксації поточного авторизованого користувача та обмеження доступу до функцій платформи залежно від ролі;
+–	впровадження адміністративної логіки, яка забезпечує доступ до окремих функцій виключно адміністратору.
+Додатково під час роботи було створено UML-діаграму діяльності для серверної частини (Додаток А) та UML-діаграму взаємодії (Додаток Б).
+
+3 ВИСНОВКИ
+
+У рамках лабораторної роботи було реалізовано основну бізнес-логіку та функціонал адміністрування серверної частини програмної системи.
+Також були розроблені UML-діаграми, що відображають процеси діяльності та взаємодії у системі.
+ 
+ДОДАТОК А
+UML ДІАГРАМА ДІЯЛЬНОСТІ
+ 
+Рисунок А.1 – UML діаграма діяльності 
+ДОДАТОК Б 
+UML ДІАГРАМА ВЗАЄМОДІЇ
+ 
+Рисунок Б.1 – UML діаграма взаємодії 
+ДОДАТОК В
+ФРАГМЕНТИ ПРОГРАМНОГО КОДУ
+
+B.1 Приклад перевірки ролі адміністратора:
+1	module.exports = function(roles) {
+2	return function(req, res, next) {
+3	if (!roles.includes(req.user.role)) {
+a.	return res.status(403).json({ message: 'Access denied' });
+4	}
+5	next();
+6	};
+7	};
+
+8	app.use('/api/vets', authMiddleware, roleMiddleware('admin'), vetRoutes);
+
+
+B.2 Приклад застосування Middleware:
+1	router.get('/all', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
+2	try {
+3	const healthRecords = await HealthRecord.find();
+4	res.json(healthRecords);
+5	} catch (err) {
+6	res.status(500).json({ message: err.message });
+7	}
+8	});
+
+9	router.get('/:id', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
+10	try {
+11	const healthRecord = await HealthRecord.findById(req.params.id);
+12	if (!healthRecord) return res.status(404).json({ message: 'Health record not found' });
+13	res.json(healthRecord);
+14	} catch (err) {
+15	res.status(500).json({ message: err.message });
+16	}
+17	});
+
+ 
+В.3 Аналіз показників здоров’я та надсилання сповіщень про критичну ситуацію:
+1	router.get('/check-critical/:animalId', authMiddleware, roleMiddleware('vet'), async (req, res) => {
+2	  try {
+3	    const healthRecords = await HealthRecord.find({ animalId: req.params.animalId });
+4	    const criticalMessages = [];
+5	
+6	    healthRecords.forEach(record => {
+7	      if (record.temperature > 39 || record.temperature < 36) {
+8	        criticalMessages.push(`Critical temperature: ${record.temperature}°C on ${record.date}`);
+9	      }
+10	      if (record.pulse > 120 || record.pulse < 60) {
+11	        criticalMessages.push(`Critical pulse: ${record.pulse} bpm on ${record.date}`);
+12	      }
+13	      if (record.bloodSugar > 140 || record.bloodSugar < 70) {
+14	        criticalMessages.push(`Critical blood sugar: ${record.bloodSugar} mg/dL on ${record.date}`);
+15	      }
+16	    });
+17	
+18	    res.json({ messages: criticalMessages });
+19	  } catch (err) {
+20	    res.status(500).json({ message: err.message });
+21	  }
+22	});
+
+
+
+ 
+ДОДАТОК Г
+ВІДЕО НА ЮТУБ
+
+https://youtu.be/i7Q2jVm4cmc
