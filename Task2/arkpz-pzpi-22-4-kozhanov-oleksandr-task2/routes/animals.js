@@ -3,6 +3,11 @@ const router = express.Router();
 const Animal = require('../Models/Animal');
 const Owner = require('../Models/Owner');
 
+/**
+ * @route GET /all
+ * @description Get all animals
+ * @access Public
+ */
 router.get('/all', async (req, res) => {
   try {
     const animals = await Animal.find();
@@ -12,6 +17,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /:id
+ * @description Get animal by ID
+ * @access Public
+ */
 router.get('/:id', async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);
@@ -22,6 +32,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /add
+ * @description Add a new animal
+ * @access Public
+ */
 router.post('/add', async (req, res) => {
   const animal = new Animal({
     name: req.body.name,
@@ -49,6 +64,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /:id
+ * @description Update an animal by ID
+ * @access Public
+ */
 router.put('/:id', async (req, res) => {
   try {
     const animal = await Animal.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -59,6 +79,11 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /:id
+ * @description Delete an animal by ID
+ * @access Public
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const animal = await Animal.findById(req.params.id);

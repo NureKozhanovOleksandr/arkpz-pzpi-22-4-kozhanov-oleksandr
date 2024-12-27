@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Appointment = require('../Models/Appointment');
 
+/**
+ * @route GET /all
+ * @description Get all appointments
+ * @access Public
+ */
 router.get('/all', async (req, res) => {
   try {
     const appointments = await Appointment.find();
@@ -11,6 +16,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /:id
+ * @description Get appointment by ID
+ * @access Public
+ */
 router.get('/:id', async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
@@ -21,6 +31,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /add
+ * @description Add a new appointment
+ * @access Public
+ */
 router.post('/add', async (req, res) => {
   const appointment = new Appointment({
     animalId: req.body.animalId,
@@ -38,6 +53,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /:id
+ * @description Delete an appointment by ID
+ * @access Public
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const appointment = await Appointment.findByIdAndDelete(req.params.id);

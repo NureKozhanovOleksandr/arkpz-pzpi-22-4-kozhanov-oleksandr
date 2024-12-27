@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const HealthRecord = require('../Models/HealthRecord');
 
+/**
+ * @route GET /all
+ * @description Get all health records
+ * @access Public
+ */
 router.get('/all', async (req, res) => {
   try {
     const healthRecords = await HealthRecord.find();
@@ -11,6 +16,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /:id
+ * @description Get health record by ID
+ * @access Public
+ */
 router.get('/:id', async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);
@@ -21,6 +31,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /add
+ * @description Add a new health record
+ * @access Public
+ */
 router.post('/add', async (req, res) => {
   const healthRecord = new HealthRecord({
     animalId: req.body.animalId,
@@ -42,6 +57,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /:id
+ * @description Update a health record by ID
+ * @access Public
+ */
 router.put('/:id', async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -52,6 +72,11 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /:id
+ * @description Delete a health record by ID
+ * @access Public
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const healthRecord = await HealthRecord.findById(req.params.id);

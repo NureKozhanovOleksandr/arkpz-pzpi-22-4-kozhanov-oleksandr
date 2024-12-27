@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Owner = require('../Models/Owner');
 
+/**
+ * @route GET /all
+ * @description Get all owners
+ * @access Public
+ */
 router.get('/all', async (req, res) => {
   try {
     const owners = await Owner.find();
@@ -11,6 +16,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /:id
+ * @description Get owner by ID
+ * @access Public
+ */
 router.get('/:id', async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);
@@ -21,6 +31,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /add
+ * @description Add a new owner
+ * @access Public
+ */
 router.post('/add', async (req, res) => {
   const owner = new Owner({
     name: req.body.name,
@@ -37,6 +52,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /:id
+ * @description Update an owner by ID
+ * @access Public
+ */
 router.put('/:id', async (req, res) => {
   try {
     const owner = await Owner.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -47,6 +67,11 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /:id
+ * @description Delete an owner by ID
+ * @access Public
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const owner = await Owner.findById(req.params.id);

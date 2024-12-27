@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Vet = require('../Models/Vet');
 
+/**
+ * @route GET /all
+ * @description Get all vets
+ * @access Public
+ */
 router.get('/all', async (req, res) => {
   try {
     const vets = await Vet.find();
@@ -11,6 +16,11 @@ router.get('/all', async (req, res) => {
   }
 });
 
+/**
+ * @route GET /:id
+ * @description Get vet by ID
+ * @access Public
+ */
 router.get('/:id', async (req, res) => {
   try {
     const vet = await Vet.findById(req.params.id);
@@ -21,6 +31,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route POST /add
+ * @description Add a new vet
+ * @access Public
+ */
 router.post('/add', async (req, res) => {
   const vet = new Vet({
     name: req.body.name,
@@ -36,6 +51,11 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/**
+ * @route PUT /:id
+ * @description Update a vet by ID
+ * @access Public
+ */
 router.put('/:id', async (req, res) => {
   try {
     const vet = await Vet.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -46,6 +66,11 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+/**
+ * @route DELETE /:id
+ * @description Delete a vet by ID
+ * @access Public
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const vet = await Vet.findByIdAndDelete(req.params.id);
