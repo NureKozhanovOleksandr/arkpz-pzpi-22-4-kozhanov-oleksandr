@@ -1,0 +1,1111 @@
+{
+	"info": {
+		"_postman_id": "c73bcd2a-b2d4-4c0c-a3a5-404176c82ae7",
+		"name": "AnimalsCareSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39619126"
+	},
+	"item": [
+		{
+			"name": "animals",
+			"item": [
+				{
+					"name": "get animals",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MDMzM2VjODhmYzFmOTFlMTk3MTJiIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTQwNzY4MCwiZXhwIjoxNzM1NzY3NjgwfQ.KvqgJcQkdkXE5X-a_Wla1cR7kcdljS2YvLoqPqJLH7g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/animals/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"animals",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get animal by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/animals/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"animals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676adf4fa616a424184d08e8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add animal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlkNzhlM2EzMzNiN2NjZTcxMWY0Iiwicm9sZSI6Im93bmVyIn0sImlhdCI6MTczNTMwMjUyMCwiZXhwIjoxNzM1NjYyNTIwfQ.XBrHPPndV6bc2NWXs84WVscepwFCGKycRPcUJUvhTJ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Tom\",\r\n  \"species\": \"Cat\",\r\n  \"breed\": \"British\",\r\n  \"age\": 1,\r\n  \"weight\": 3,\r\n  \"ownerId\": \"676c3f7409e7b8c0afdc09d7\",\r\n  \"lastVisit\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/animals/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"animals",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update animal by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"did\",\r\n    \"age\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/animals/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"animals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676c3f9a09e7b8c0afdc09da"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete animal by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/animals/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"animals",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "appointments",
+			"item": [
+				{
+					"name": "get all appointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlkNzhlM2EzMzNiN2NjZTcxMWY0Iiwicm9sZSI6Im93bmVyIn0sImlhdCI6MTczNTMwMjUyMCwiZXhwIjoxNzM1NjYyNTIwfQ.XBrHPPndV6bc2NWXs84WVscepwFCGKycRPcUJUvhTJ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/appointments/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"appointments",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get appointment by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/appointments/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new appointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"animalId\": \"676c425009e7b8c0afdc0a01\",\r\n    \"vetId\": \"676c433d09e7b8c0afdc0a0d\",\r\n    \"date\": \"2024-12-21T00:00:00.000\",\r\n    \"reason\": \"stomachache\",\r\n    \"status\": \"transferred to hospital\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/appointments/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"appointments",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete appointment by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/appointments/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "health records",
+			"item": [
+				{
+					"name": "get all health records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MTM4ZjQyMjA2N2E1OTc5N2VhMGNkIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzU0NzMzOTYsImV4cCI6MTczNTgzMzM5Nn0.uGQZkS24DIDyoA0Jadz7bDCnctXF3nJL7A1_-hJ-rrs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get health record by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676c17b79bedbb8d85c6568d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get notifications by animal id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MTM4ZjQyMjA2N2E1OTc5N2VhMGNkIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzU0NzMzOTYsImV4cCI6MTczNTgzMzM5Nn0.uGQZkS24DIDyoA0Jadz7bDCnctXF3nJL7A1_-hJ-rrs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/check-critical/:animalId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								"check-critical",
+								":animalId"
+							],
+							"variable": [
+								{
+									"key": "animalId",
+									"value": "676c425009e7b8c0afdc0a01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new health record",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTk2ZDRlM2EzMzNiN2NjZTcxMWU0Iiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzUzMDA4MjAsImV4cCI6MTczNTY2MDgyMH0.IvAaSR-6yzZ6HrsVZhQ74ZgBLrr4ZOLuOjyvOQIiZ-Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"animalId\": \"676c425009e7b8c0afdc0a01\",\r\n    \"date\": \"2023-10-01T00:00:00.000Z\",\r\n    \"diagnosis\": \"Fever\",\r\n    \"treatment\": \"Antibiotics\",\r\n    \"notes\": \"The cat has a high fever.\",\r\n    \"vetId\": \"676c433d09e7b8c0afdc0a0d\",\r\n    \"temperature\": 42,\r\n    \"pulse\": 110,\r\n    \"bloodSugar\": 90\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update health record by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete health record by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get average terperature by animal id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MTM4ZjQyMjA2N2E1OTc5N2VhMGNkIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzU0NzMzOTYsImV4cCI6MTczNTgzMzM5Nn0.uGQZkS24DIDyoA0Jadz7bDCnctXF3nJL7A1_-hJ-rrs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/temperature/average/:animalId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								"temperature",
+								"average",
+								":animalId"
+							],
+							"variable": [
+								{
+									"key": "animalId",
+									"value": "676e96fde3a333b7cce711e9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get temperature variance by animal id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MTM4ZjQyMjA2N2E1OTc5N2VhMGNkIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzU0NzMzOTYsImV4cCI6MTczNTgzMzM5Nn0.uGQZkS24DIDyoA0Jadz7bDCnctXF3nJL7A1_-hJ-rrs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/healthrecords/temperature/variance/:animalId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"healthrecords",
+								"temperature",
+								"variance",
+								":animalId"
+							],
+							"variable": [
+								{
+									"key": "animalId",
+									"value": "676e96fde3a333b7cce711e9"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "owners",
+			"item": [
+				{
+					"name": "get all owners",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlmMDA5MDY5YjhiNDIwZWQwY2RlIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTMwMjkxMiwiZXhwIjoxNzM1NjYyOTEyfQ.iBueK4DeABXFgLttsQSAlqasVrqrV6KhK-ViHh0Ijt0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/owners/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"owners",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get owner by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDdhMGIyOWJjODVlZmFiNDdhZmRiIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzUyMjc5MTUsImV4cCI6MTczNTU4NzkxNX0.9sr__pAACRUFb0ND7fJcL9AGwXcbBzgNGx-fzcW2BiI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/owners/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"owners",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676c3f7409e7b8c0afdc09d7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlmMDA5MDY5YjhiNDIwZWQwY2RlIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTMwMjkxMiwiZXhwIjoxNzM1NjYyOTEyfQ.iBueK4DeABXFgLttsQSAlqasVrqrV6KhK-ViHh0Ijt0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Alex\",\r\n    \"email\": \"example1@gmail.com\",\r\n    \"address\": \"Kyiv, Nauky, 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/owners/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"owners",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update owner by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Oleg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/owners/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"owners",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676c3f7409e7b8c0afdc09d7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete owner by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDc4ODIyOWJjODVlZmFiNDdhZmQ0Iiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTIyNzUyNywiZXhwIjoxNzM1NTg3NTI3fQ.yQQH86HWK89e8o1FBnPWWO__jaqA0R78zou-iKYxUlk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/owners/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"owners",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676c408809e7b8c0afdc09ec"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vets",
+			"item": [
+				{
+					"name": "get vets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MDMzM2VjODhmYzFmOTFlMTk3MTJiIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTQwNzM4NywiZXhwIjoxNzM1NzY3Mzg3fQ.dozOR3Cq0FG74nPY-McDATvzwBm2PSYeedi5yR-PIF8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/vets/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"vets",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get vet by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/vets/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"vets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "677037287c6c1df84f4de471"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add new vet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlmMDA5MDY5YjhiNDIwZWQwY2RlIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTMwMjkxMiwiZXhwIjoxNzM1NjYyOTEyfQ.iBueK4DeABXFgLttsQSAlqasVrqrV6KhK-ViHh0Ijt0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Anton\",\r\n    \"specialization\": \"dogs\",\r\n    \"contactInfo\": \"+380500306232\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/vets/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"vets",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update vet by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZTlmMDA5MDY5YjhiNDIwZWQwY2RlIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTMwMjkxMiwiZXhwIjoxNzM1NjYyOTEyfQ.iBueK4DeABXFgLttsQSAlqasVrqrV6KhK-ViHh0Ijt0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Serhii\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/vets/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"vets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676e9f299069b8b420ed0ce5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete vet by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc2ZDdhMGIyOWJjODVlZmFiNDdhZmRiIiwicm9sZSI6InZldCJ9LCJpYXQiOjE3MzUyMjc5MTUsImV4cCI6MTczNTU4NzkxNX0.9sr__pAACRUFb0ND7fJcL9AGwXcbBzgNGx-fzcW2BiI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/vets/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"vets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "676b0822a38756b113f2a178"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oleksandr\",\r\n  \"password\": \"password1231\",\r\n  \"role\": \"vet\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"oleksandr_admin\",\r\n  \"password\": \"password1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "iot",
+			"item": [
+				{
+					"name": "add new iot device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc3MDMzM2VjODhmYzFmOTFlMTk3MTJiIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczNTQwNzczNCwiZXhwIjoxNzM1NzY3NzM0fQ.oJJz__JwPyc-3K7qLsboD0ktwKXAw4QIJ5gzajLOihk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"secret\": \"test-secret\",\r\n    \"animalId\": \"676e96fde3a333b7cce711e9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/iot/bind",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"iot",
+								"bind"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
