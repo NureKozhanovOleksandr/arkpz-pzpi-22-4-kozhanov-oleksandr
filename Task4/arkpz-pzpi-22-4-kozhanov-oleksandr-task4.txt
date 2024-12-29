@@ -1,0 +1,279 @@
+Харківський національний університет радіоелектроніки
+Факультет комп'ютерних наук
+
+
+
+Кафедра програмної інженерії
+
+
+ЗВІТ
+до лабораторної роботи номер 4 з дисципліни
+"Аналіз та рефакторинг коду"
+на тему: " РОЗРОБКА IoT КЛІЄНТА"
+
+
+
+
+Виконав ст. гр. ПЗПІ-22-4
+Кожанов Олександр Юрійович
+
+Перевірив
+ст. викладач кафедри ПІ
+Сокорчук Ігор Петрович
+ 
+
+
+
+
+
+Харків 2024
+1 МЕТА
+
+Мета роботи полягає у розробці програмного забезпечення для SmartDevice пристрою, побудованого на основі сучасної популярної платформи, що підходить для реалізації вбудованих систем (Embedded Systems), з метою створення програмної системи контролю стану тварин в клініках.
+
+2 ХІД РОБОТИ
+
+У ході виконання лабораторної роботи було розроблено програмне забезпечення для розумного пристрою, що інтегрується в програмну систему контролю стану тварин в клініках (див. Додаток В).
+
+Опис інженерних рішень:
+Пристрій контролю стану тварин:
+•	мікроконтролер ESP32;
+•	датчик температури DHT22 для вимірювання температури тварини;
+•	підключення до серверу через ngrok для отримання та відправки даних в реальному часі.
+
+Функціональні можливості пристрою:
+Збір та відправка даних:
+•	вимірювання температури тварини;
+•	відправка даних температури на сервер;
+•	отримання animalId з серверу.
+•	Математична обробка даних та відображення статистики:
+•	розрахунок середньої температури;
+•	розрахунок варіації температури. 
+Технічні характеристики:
+•	зв'язок з сервером через HTTP/HTTPS протокол;
+•	періодичне опитування сервера кожні 10 секунд;
+•	автоматичне підключення до WiFi мережі;
+•	вивід діагностичної інформації через Serial Monitor.
+
+Середовище розробки та емуляції:
+•	платформа Wokwi (https://wokwi.com);
+•	тунелювання локального серверу через ngrok;
+•	мова програмування: C++ (Arduino);
+•	комунікація з серверною частиною: REST API.
+
+Перед розробкою програмного коду розумного пристрою було створено UML діаграми прецедентів та діяльності для візуалізації його роботи (див. Додатки А-Б).
+
+Бізнес логіка розумного пристрою включає:
+•	отримання animalId з серверу;
+•	вимірювання температури тварини;
+•	відправка даних температури на сервер;
+•	математичну обробку даних для розрахунку середньої температури та варіації.
+
+Налаштування розумного пристрою передбачає:
+•	конфігурацію WiFi з'єднання;
+•	налаштування зв'язку з сервером через ngrok;
+•	встановлення часових інтервалів для перевірки стану тварини;
+•	визначення порогових значень для оцінки стану тварини.
+
+
+ 
+3 ВИСНОВКИ
+
+Протягом лабораторної роботи було побудовано діаграми прецедентів та діяльності для розумного пристрою контролю стану тварин (див. Додатки А-Б). На базі цих діаграм було реалізовано програмний код для ESP32 з датчиком температури, який вимірює температуру тварин та відправляє дані на сервер для подальшої обробки (див. Додаток В).
+ 
+ДОДАТОК А
+UML ДІАГРАМА ПРЕЦЕДЕНТІВ
+ 
+Рисунок А.1 – Діаграма прецедентів для розумного пристрою
+
+ 
+ДОДАТОК Б
+UML ДІАГРАМА ДІЯЛЬНОСТІ
+
+ 
+Рисунок Б.1 – Діаграма діяльності для розумного пристрою
+ 
+ДОДАТОК В
+ФРАГМЕНТИ ПРОГРАМНОГО КОДУ
+
+В.1 Файл esp32-dht22:
+1	#include <WiFi.h>
+2	#include <HTTPClient.h>
+3	#include <ArduinoJson.h>
+4	#include "DHTesp.h"
+5	#include "config.h"
+
+6	// Server URLs
+7	String serverUrl = String(baseURL) + "/temperature";
+8	String animalIdUrl = String(baseURL) + "/animalId";
+
+9	const int DHT_PIN = 15;
+10	DHTesp dhtSensor;
+
+11	String animalId;
+
+12	void setup_wifi() {
+13	Serial.println("Connecting to WiFi...");
+14	WiFi.begin(ssid, password);
+
+15	while (WiFi.status() != WL_CONNECTED) {
+16	delay(500);
+17	Serial.print(".");
+18	}
+
+19	Serial.println("\nWiFi connected");
+20	Serial.print("IP address: ");
+21	Serial.println(WiFi.localIP());
+22	}
+
+23	void getAnimalId() {
+24	if (WiFi.status() == WL_CONNECTED) {
+25	HTTPClient http;
+
+26	Serial.print("Getting animalId from: ");
+27	Serial.println(animalIdUrl + "?secret=" + deviceSecret);
+
+28	http.begin(animalIdUrl + "?secret=" + deviceSecret);
+29	http.addHeader("Content-Type", "application/json");
+
+30	int httpCode = http.GET();
+
+31	if (httpCode == HTTP_CODE_OK) {
+a.	String response = http.getString();
+b.	Serial.print("AnimalId response: ");
+c.	Serial.println(response);
+
+d.	DynamicJsonDocument doc(1024);
+e.	deserializeJson(doc, response);
+f.	animalId = doc["animalId"].as<String>();
+g.	Serial.print("AnimalId: ");
+h.	Serial.println(animalId);
+32	} else {
+a.	Serial.print("Error on getting animalId: ");
+b.	Serial.println(httpCode);
+33	}
+
+34	http.end();
+35	Serial.println("--------------------");
+36	}
+37	}
+
+38	void sendData(float temperature) {
+39	if (WiFi.status() == WL_CONNECTED) {
+40	HTTPClient http;
+
+41	Serial.print("Sending data to: ");
+42	Serial.println(serverUrl);
+
+43	http.begin(serverUrl);
+44	http.addHeader("Content-Type", "application/json");
+
+45	DynamicJsonDocument doc(1024);
+46	doc["temperature"] = temperature;
+47	doc["animalId"] = animalId;
+48	doc["secret"] = deviceSecret;
+
+49	String requestBody;
+50	serializeJson(doc, requestBody);
+
+51	int httpCode = http.POST(requestBody);
+52	Serial.print("Data HTTP Response code: ");
+53	Serial.println(httpCode);
+
+54	String response = http.getString();
+55	Serial.print("Data response: ");
+56	Serial.println(response);
+57	Serial.println(httpCode);
+
+58	http.end();
+59	Serial.println("--------------------");
+60	}
+61	}
+
+62	void setup() {
+63	Serial.begin(115200);
+64	dhtSensor.setup(DHT_PIN, DHTesp::DHT22);
+65	setup_wifi();
+66	getAnimalId();
+67	}
+
+68	void loop() {
+69	TempAndHumidity data = dhtSensor.getTempAndHumidity();
+70	Serial.println("Temp: " + String(data.temperature, 2) + "°C");
+71	Serial.println("---");
+
+72	sendData(data.temperature);
+
+73	delay(10000); // Wait for a new reading from the sensor (DHT22 has ~0.5Hz sample rate)
+74	}
+
+В.2 Файл diagram.json:
+1	{
+2	"version": 1,
+3	"author": "Uri Shaked",
+4	"editor": "wokwi",
+5	"parts": [
+6	{ "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": -33.7, "left": 33.4, "attrs": {} },
+7	{ "type": "wokwi-dht22", "id": "dht1", "top": -15.53, "left": 145.5, "attrs": {} }
+8	],
+9	"connections": [
+10	[ "esp:TX0", "$serialMonitor:RX", "", [] ],
+11	[ "esp:RX0", "$serialMonitor:TX", "", [] ],
+12	[ "dht1:SDA", "esp:D15", "green", [ "v0" ] ],
+13	[ "dht1:VCC", "esp:3V3", "red", [ "v0" ] ],
+14	[ "dht1:GND", "esp:GND.1", "black", [ "v0" ] ]
+15	],
+16	"dependencies": {}
+17	}
+
+В.3 Файл config.h:
+1	#ifndef CONFIG_H
+2	#define CONFIG_H
+3	// WiFi credentials
+4	const char* ssid = "Wokwi-GUEST";
+5	const char* password = "";
+6	// Enter your ngrok URL
+7	const char* baseURL = "http://b071-176-122-98-176.ngrok-free.app/api/iot";
+8	// Device credentials
+9	const char* deviceSecret = "test-secret";
+10	#endif
+ 
+В.4 Математична обробки даних температури:
+1	/**
+2	 * @route GET /api/healthrecords/temperature/average/:animalId
+3	 * @desc Get average temperature for an animal
+4	 * @access Private (owner, vet)
+5	 */
+6	router.get('/temperature/average/:animalId', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
+7	  try {
+8	    const healthRecords = await HealthRecord.find({ animalId: req.params.animalId });
+9	    const temperatures = healthRecords.map(record => record.temperature);
+10	    const average = temperatures.reduce((sum, temp) => sum + temp, 0) / temperatures.length;
+11	    res.json({ average });
+12	  } catch (err) {
+13	    res.status(500).json({ message: err.message });
+14	  }
+15	});
+16	
+17	/**
+18	 * @route GET /api/healthrecords/temperature/variance/:animalId
+19	 * @desc Get temperature variance for an animal
+20	 * @access Private (owner, vet)
+21	 */
+22	router.get('/temperature/variance/:animalId', authMiddleware, roleMiddleware(['owner', 'vet']), async (req, res) => {
+23	  try {
+24	    const healthRecords = await HealthRecord.find({ animalId: req.params.animalId });
+25	    const temperatures = healthRecords.map(record => record.temperature);
+26	    const mean = temperatures.reduce((sum, temp) => sum + temp, 0) / temperatures.length;
+27	    const variance = temperatures.reduce((sum, temp) => sum + Math.pow(temp - mean, 2), 0) / temperatures.length;
+28	    res.json({ variance });
+29	  } catch (err) {
+30	    res.status(500).json({ message: err.message });
+31	  }
+32	});
+
+ 
+ДОДАТОК Г
+ВІДЕО НА ЮТУБ
+
+https://youtu.be/D5uqxCzuDLE

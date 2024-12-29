@@ -54,7 +54,7 @@ router.post('/temperature', async (req, res) => {
 
 /**
  * @route GET /api/iot/animalId
- * @desc Get the latest animal ID
+ * @desc Get binded animalId for a device
  * @access Private (iot)
  */
 router.get('/animalId', async (req, res) => {
